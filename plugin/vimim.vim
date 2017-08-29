@@ -140,6 +140,7 @@ function! s:vimim_initialize_global()
     let s:static     = {'onekey':0,'windowless':0,'dynamic':0,'static':1}
     let s:onekey     = {'onekey':1,'windowless':0,'dynamic':0,'static':0}
     let s:windowless = {'onekey':0,'windowless':1,'dynamic':0,'static':0}
+	let s:tailed_moto = 0
 endfunction
 
 function! s:vimim_dictionary_keycodes()
@@ -2204,9 +2205,15 @@ function! s:vimim_make_pairs(oneline)
     let oneline_list = split(a:oneline)
     let menu = remove(oneline_list, 0)
     let results = []
+	" modified by motoyang
+	let idx = strlen(menu)
+	let keys = split(s:keyboard)
+	let tail = strpart(keys[0], idx)
+	if strlen(tail) > 0 | let s:tailed_moto = 1 | endif
     for chinese in oneline_list
-        call add(results, menu .' '. chinese)
+        call add(results, menu .' '. chinese . tail)
     endfor
+	" motoyang!!!
     return results
 endfunction
 
@@ -3001,7 +3008,15 @@ function! s:vimim_popupmenu_list(lines)
     let s:match_list = a:lines
     let keyboards = split(s:keyboard)  " mmmm => ['m',"m'm'm"]
     let keyboard = join(keyboards,"")
-    let tail = len(keyboards) < 2 ? "" : get(keyboards,1)
+	" the follow line should been modify. it is wrong for 'dajiudian'.
+	" modified by motoyang 
+	if (s:tailed_moto == 1)
+		let tail = len(keyboards) < 2 ? "" : ""
+		let s:tailed_moto = 0
+	else
+		let tail = len(keyboards) < 2 ? "" : get(keyboards,1)
+	endif
+	" motoyang!!!
     if empty(a:lines) || type(a:lines) != type([])
         return []
     elseif s:vimim_cjk() && len(s:hjkl)
