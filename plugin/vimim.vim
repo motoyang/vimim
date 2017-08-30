@@ -2209,7 +2209,7 @@ function! s:vimim_make_pairs(oneline)
 	let idx = strlen(menu)
 	let keys = split(s:keyboard)
 	let tail = strpart(keys[0], idx)
-	if strlen(tail) > 0 | let s:tailed_moto = 1 | endif
+	if strlen(tail) > 0 | let s:tailed_moto = 1 | else | let s:tailed_moto = 0 | endif
     for chinese in oneline_list
         call add(results, menu .' '. chinese . tail)
     endfor
@@ -3012,7 +3012,6 @@ function! s:vimim_popupmenu_list(lines)
 	" modified by motoyang 
 	if (s:tailed_moto == 1)
 		let tail = len(keyboards) < 2 ? "" : ""
-		let s:tailed_moto = 0
 	else
 		let tail = len(keyboards) < 2 ? "" : get(keyboards,1)
 	endif
