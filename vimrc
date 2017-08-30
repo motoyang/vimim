@@ -79,6 +79,8 @@ set fileencoding=utf-8
 set fileencodings=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
 "语言设置
 set langmenu=zh_CN.UTF-8
+" 设定 doc 文档目录
+let helptags=$VIM."/vimfiles/doc"
 set helplang=cn
 " 总是显示状态行
 set laststatus=2
@@ -118,6 +120,8 @@ set matchtime=1
 set scrolloff=3
 " 为C程序提供自动缩进
 set smartindent
+"设置中文提示
+language messages zh_CN.utf-8
 
 
 
@@ -160,6 +164,21 @@ let NERDTreeShowHidden=1
 map <leader>t :NERDTreeToggle<CR>
 
 Plugin 'Xuyuanp/nerdtree-git-plugin'
+
+Plugin 'asins/vimcdoc'
+
+"安装tagbar插件
+Plugin 'majutsushi/tagbar'
+"设置tagbar使用的ctags的插件,必须要设置对
+let g:tagbar_ctags_bin='/Users/automan_xiao/bin/ctags'
+"设置tagbar的窗口宽度
+let g:tagbar_width=30
+"设置tagbar的窗口显示的位置,为左边
+let g:tagbar_left=1
+"打开文件自动 打开tagbar
+autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
+"映射tagbar的快捷
+map <leader>g :TagbarToggle<CR>
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
