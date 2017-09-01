@@ -24,6 +24,10 @@ endif
 noremap	oo	o<ESC>
 noremap OO	O<ESC>
 
+" 设置隐藏字符的显示：
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
+set list
+
 " 设置当文件被改动时自动载入
 set autoread
 "代码补全 
