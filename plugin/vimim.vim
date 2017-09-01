@@ -2208,8 +2208,8 @@ function! s:vimim_make_pairs(oneline)
 	" modified by motoyang
 	let idx = strlen(menu)
 	let keys = split(s:keyboard)
-	let tail = strpart(keys[0], idx)
-	if strlen(tail) > 0 | let s:tailed_moto = 1 | else | let s:tailed_moto = 0 | endif
+	let tail = strlen(keys[0]) > idx ? strpart(keys[0], idx) : ""
+	let s:tailed_moto = empty(tail) ? 0 : 1
     for chinese in oneline_list
         call add(results, menu .' '. chinese . tail)
     endfor

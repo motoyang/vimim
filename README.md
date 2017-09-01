@@ -1,13 +1,11 @@
-##Vimim 是vi中最好的输入法
+## Vimim 是vi中最好的输入法
 
 由于在VI中，normal和insert模式的存在，如果在insert模式下正在输入中文，在通过ESC键返回到normal模式后，系统的中文输入法会与VI的命令相冲突，必须要退出中文输入法，才能正常操作VI 。Vimim 就是为了解决这个问题而出现的。
 
 Vimim的另外一个好处就是平台无关性，你可以在Windows、Linux 、macOS中使用同样的输入法，与操作系统的输入法输入法没有关系。
 
-```
 分享的附件：
 链接: https://pan.baidu.com/s/1eR2uQDc 密码: 6ktp
-```
 
 1. 安装Vimim
 
