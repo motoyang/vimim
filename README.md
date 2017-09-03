@@ -58,8 +58,8 @@ let en = " #  &  %  $  =  *  {  }  (  )  <  >  [  ] "
 let cn = " ＃ ＆ ％ ￥ ＝ ﹡ 〖 〗 （ ） 《 》 【 】"
 ```
 另外，可以在.vimrc中设置4级标点符号输入切换的快捷建，每按一次快捷键，增加1级，在0~3级之间循环。比如，如下设置<Leader>a为切换建，每按一次快捷建，增加1级。缺省的标点符号可以设置为2级，应该是比较平衡的方式。
->let g:Vimim_punctuation = 2
-inoremap <unique><silent> <leader>a  <C-R>=g:Vimim_punctuations_Toogle()<CR>
+>let g:Vimim_punctuation=2
+>inoremap <unique><silent> <leader>a  <C-R>=g:Vimim_punctuations_Toogle()<CR>
 
 
 
