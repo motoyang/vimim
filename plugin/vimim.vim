@@ -448,15 +448,15 @@ function! s:vimim_dictionary_statusline()
 endfunction
 
 function! s:vimim_dictionary_punctuations()
-    let s:antonym = " 〖〗 （） 《》 【】 ‘’ “”"
+    let s:antonym = " 〖〗 （） 《》 【】 "
     let one =       " { }  ( )  < >  [  ] "
     let two = join(split(join(split(s:antonym)[:3],''),'\zs'))
     let antonyms = s:vimim_key_value_hash(one, two)
-    let one = " ,  .  +  -  ~  ^    _    "
-    let two = " ， 。 ＋ － ～ …… —— "
+    let one = " ,  .  ;  ?  :  !  @  "
+    let two = " ， 。 ； ？ ： ！ 、 "
     let mini_punctuations = s:vimim_key_value_hash(one, two)
-    let one = " @  :  #  &  %  $  !  =  ;  ?  * "
-    let two = " 　 ： ＃ ＆ ％ ￥ ！ ＝ ； ？ ﹡"
+    let one = " #  &  %  $  =   * "
+    let two = " ＃ ＆ ％ ￥ ＝ ﹡"
     let most_punctuations = s:vimim_key_value_hash(one, two)
     call extend(most_punctuations, antonyms)
     let s:key_evils = { '\' : "、", "'" : "‘’", '"' : "“”" }
@@ -467,9 +467,18 @@ function! s:vimim_dictionary_punctuations()
     if g:Vimim_punctuation > 0   " :let g:Vimim_punctuation = 1
         call extend(s:punctuations, mini_punctuations)
     endif
-    if g:Vimim_punctuation > 1   " :let g:Vimim_punctuation = 2
+    if g:Vimim_punctuation > 2   " :let g:Vimim_punctuation = 3
         call extend(s:punctuations, most_punctuations)
     endif
+endfunction
+
+function! g:Vimim_punctuations_Toogle()
+	let g:Vimim_punctuation += 1
+	let g:Vimim_punctuation = g:Vimim_punctuation % 4 
+	sil!call s:vimim_dictionary_punctuations()
+	echo "g:Vimim_punctuation = " . g:Vimim_punctuation
+	let key = ''
+    sil!exe 'sil!return "' . key . '"'
 endfunction
 
 function! g:Vimim_slash()
@@ -727,11 +736,12 @@ function! s:vimim_punctuation_maps()
         endif
     endfor
     if empty(s:ui.quote)
-        lnoremap<buffer> ' <C-R>=g:Vimim_single_quote()<CR>
+"        lnoremap<buffer> ' <C-R>=g:Vimim_single_quote()<CR>
     endif
-    if g:Vimim_punctuation == 3
-        lnoremap<buffer>    "     <C-R>=g:Vimim_double_quote()<CR>
-        lnoremap<buffer> <Bslash> <C-R>=g:Vimim_bslash()<CR>
+    if g:Vimim_punctuation >= 2
+        lnoremap<buffer><silent> '			<C-R>=g:Vimim_single_quote()<CR>
+        lnoremap<buffer><silent> "			<C-R>=g:Vimim_double_quote()<CR>
+"        lnoremap<buffer> <Bslash>	<C-R>=g:Vimim_bslash()<CR>
     endif
 endfunction
 
@@ -760,7 +770,7 @@ function! g:Vimim_single_quote()
     elseif s:mode.windowless && s:gi_dynamic
         let key = '\<C-N>\<C-N>'
         call g:Vimim_space()
-    elseif g:Vimim_punctuation < 3
+    elseif g:Vimim_punctuation < 2			" g:Vimim_punctuation = 0 or 1
         return key
     elseif s:toggle_punctuation > 0
         let pairs = split(s:key_evils[key], '\zs')
@@ -772,11 +782,14 @@ endfunction
 
 function! g:Vimim_double_quote()
     let key = '"'
-    if s:toggle_punctuation > 0
+	if g:Vimim_punctuation < 2				" g:Vimim_punctuation = 0 or 1
+		return key
+	elseif s:toggle_punctuation > 0
         let pairs = split(s:key_evils[key], '\zs')
         let s:smart_quotes.double += 1
-        let yes = pumvisible() ? '\<C-Y>' : ""
-        let key = yes . get(pairs, s:smart_quotes.double % 2)
+"        let yes = pumvisible() ? '\<C-Y>' : ""
+"        let key = yes . get(pairs, s:smart_quotes.double % 2)
+        let key = get(pairs, s:smart_quotes.double % 2)
     endif
     sil!exe 'sil!return "' . key . '"'
 endfunction
@@ -971,6 +984,7 @@ function! g:Vimim_onekey()
         if s:ui.root == 'cloud' && s:ui.im != 'mycloud'
             let s:cloud = s:ui.im
         endif
+		echo "im = " . s:ui.im
         let key = s:vimim_start()
     endif
     sil!exe 'sil!return "' . key . '"'
@@ -3156,10 +3170,10 @@ let s:VimIM += [" ====  core driver      ==== {{{"]
 " =================================================
 
 function! s:vimim_plug_and_play()
-    nnoremap <silent> <C-_> i<C-R>=g:Vimim_chinese()<CR><Esc>
+"    nnoremap <silent> <C-_> i<C-R>=g:Vimim_chinese()<CR><Esc>
     inoremap <unique> <C-_>  <C-R>=g:Vimim_chinese()<CR>
-    inoremap <silent> <C-^>  <C-R>=g:Vimim_onekey()<CR>
-    xnoremap <silent> <C-^> y:call g:Vimim_visual()<CR>
+    inoremap <unique><silent> <C-^>  <C-R>=g:Vimim_onekey()<CR>
+"    xnoremap <silent> <C-^> y:call g:Vimim_visual()<CR>
     if g:Vimim_map !~ 'no-gi'
         nnoremap <silent> gi a<C-R>=g:Vimim_gi()<CR>
             xmap <silent> gi  <C-^>

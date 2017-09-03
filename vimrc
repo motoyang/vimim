@@ -3,7 +3,8 @@ set novisualbell    " 不要闪烁(不明白)
 set statusline=%F%m%r%h%w\ %<[FORMAT=%{&ff}]\ [TYPE=%Y]%=[%B\ POS=%v,%l/%L,%p%%]\ %{strftime(\"%Y-%m-%d\ %H:%M\")}   "状态行显示的内容  
 
 let g:Vimim_cloud = 'baidu'
-let g:Vimim_punctuation = 3
+let g:Vimim_punctuation = 2
+inoremap <unique><silent> <leader>a  <C-R>=g:Vimim_punctuations_Toogle()<CR>
 "let g:Vimim_toogle='pinyin,baidu'
 
 " 设置配色方案
@@ -26,7 +27,7 @@ noremap OO	O<ESC>
 
 " 设置隐藏字符的显示：
 set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
-set list
+set nolist
 
 " 设置当文件被改动时自动载入
 set autoread
