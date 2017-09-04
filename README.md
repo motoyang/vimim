@@ -62,7 +62,7 @@ let cn = " ＃ ＆ ％ ￥ ＝ ﹡ 〖 〗 （ ） 《 》 【 】"
 
 >let g:Vimim\_punctuation=2
 >
->inoremap \<uniquei\>\<silent\> \<leader\>a  \<C-R\>=g:Vimim\_punctuations\_Toogle()\<CR\>
+>inoremap \<uniquei\>\<silent\> \<leader\>a  \<C-R\>=g:Vimim\_punctuations\_Toggle()\<CR\>
 
 
 
