@@ -4,7 +4,7 @@ set statusline=%F%m%r%h%w\ %<[FORMAT=%{&ff}]\ [TYPE=%Y]%=[%B\ POS=%v,%l/%L,%p%%]
 
 let g:Vimim_cloud = 'baidu'
 let g:Vimim_punctuation = 2
-inoremap <unique><silent> <leader>a  <C-R>=g:Vimim_punctuations_Toogle()<CR>
+inoremap <unique><silent> <leader>a  <C-R>=g:Vimim_punctuations_Toggle()<CR>
 "let g:Vimim_toogle='pinyin,baidu'
 
 " 设置配色方案

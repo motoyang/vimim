@@ -472,7 +472,7 @@ function! s:vimim_dictionary_punctuations()
     endif
 endfunction
 
-function! g:Vimim_punctuations_Toogle()
+function! g:Vimim_punctuations_Toggle()
 	let g:Vimim_punctuation += 1
 	let g:Vimim_punctuation = g:Vimim_punctuation % 4 
 	sil!call s:vimim_dictionary_punctuations()
