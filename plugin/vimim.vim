@@ -1067,7 +1067,16 @@ let s:VimIM += [" ====  mode: chinese    ==== {{{"]
 function! g:Vimim_chinese()
     let s:mode = g:Vimim_mode =~ 'static' ? s:static : s:dynamic
     let s:switch = empty(s:ui.frontends) ? -1 : s:switch ? 0 : 1
-    return s:switch<0 ? "" : s:switch ? s:vimim_start() : s:vimim_stop()
+"    return s:switch<0 ? "" : s:switch ? s:vimim_start() : s:vimim_stop()
+	if s:switch < 0 
+		return ""
+	elseif s:switch
+		echo "Vimim start"
+		return s:vimim_start()
+	else
+		echo "Vimim stop"
+		return s:vimim_stop()
+	endif
 endfunction
 
 function! s:vimim_set_keyboard_maps()

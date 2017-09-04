@@ -32,6 +32,7 @@ Vimim的另外一个好处就是平台无关性，你可以在Windows、Linux �
 原本Vimim 支持baidu、google、sogou、qq四个云输入法，但是由于google在国内不能访问，sogou和qq更改了云输入方式，现在能用的云输入法只有baidu了。
 
 在通过Ctrl-^切换输入法时，由于google、sogou、qq不能使用了，会出现vi卡死的情况。由于这个原因，我更改了vimim.vim 文件，将s:rc["g:Vimim\_cloud"]中的初始内容赋值为空，可以在.vimrc 文件中如下设置：
+
 >let g:Vimim\_cloud='baidu'
 
 这样你就可以通过Ctrl-^切换，使用百度的云拼音输入法了，如果不想使用baidu云输入法，就将.vimrc 中的上一行删除就可以了。
@@ -58,9 +59,10 @@ let en = " #  &  %  $  =  *  {  }  (  )  <  >  [  ] "
 let cn = " ＃ ＆ ％ ￥ ＝ ﹡ 〖 〗 （ ） 《 》 【 】"
 ```
 另外，可以在.vimrc中设置4级标点符号输入切换的快捷建，每按一次快捷键，增加1级，在0~3级之间循环。比如，如下设置<Leader>a为切换建，每按一次快捷建，增加1级。缺省的标点符号可以设置为2级，应该是比较平衡的方式。
->let g:Vimim_punctuation=2
 
->inoremap <unique><silent> <leader>a  <C-R>=g:Vimim_punctuations_Toogle()<CR>
+>let g:Vimim_punctuation=2
+>
+>inoremap <uniquei><silent> <leader>a  <C-R>=g:Vimim_punctuations_Toogle()<CR>
 
 
 
