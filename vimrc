@@ -1,7 +1,27 @@
-set showcmd         " 输入的命令显示出来，看的清楚些  
-set novisualbell    " 不要闪烁(不明白)  
-set statusline=%F%m%r%h%w\ %<[FORMAT=%{&ff}]\ [TYPE=%Y]%=[%B\ POS=%v,%l/%L,%p%%]\ %{strftime(\"%Y-%m-%d\ %H:%M\")}   "状态行显示的内容  
+" 输入的命令显示出来，看的清楚些
+set showcmd
+" 不要闪烁(不明白)
+set novisualbell
+"状态行显示的内容
+set statusline=%F%m%r%h%w\ %<[FORMAT=%{&ff}]\ [TYPE=%Y]%=[%B\ POS=%v,%l/%L,%p%%]\ %{strftime(\"%Y-%m-%d\ %H:%M\")}
 
+" paste开关
+set pastetoggle=<leader>b
+
+" 使用当前的查找模式，统计匹配个数
+nnoremap <leader>c :%s///gn<CR>
+
+" 查找当前选中的文本
+xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
+xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
+function! s:VSetSearch()
+  let temp = @s
+  norm! gv"sy
+  let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')
+  let @s = temp
+endfunction
+
+" Vimim 输入法的设置
 let g:Vimim_cloud = 'baidu'
 let g:Vimim_punctuation = 2
 inoremap <unique><silent> <leader>a  <C-R>=g:Vimim_punctuations_Toggle()<CR>
