@@ -79,9 +79,11 @@ vim把文件读取完毕并以encoding编码存放到缓冲区内存之后，会
 
 VIM把缓冲区中的encoding编码的字节集合转换成fileencoding编码后写入磁盘，完成文件保存。
 
-可以看出，VIM涉及到的3种字符编码之间的转换： 
-读：fileencoding	——–>	encoding 
-显：encoding		———>	termencoding 
+可以看出，VIM涉及到的3种字符编码之间的转换：
+
+读：fileencoding	——–>	encoding
+显：encoding		———>	termencoding
+
 写：encoding		——->	fileencoding
 
 只要这三种转换都不会出现问题，那么VIM就可以正常工作，不会出现乱码。 
