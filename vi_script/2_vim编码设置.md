@@ -81,10 +81,11 @@ VIM把缓冲区中的encoding编码的字节集合转换成fileencoding编码后
 
 可以看出，VIM涉及到的3种字符编码之间的转换：
 
-读：fileencoding	——–>	encoding
-显：encoding		———>	termencoding
-
-写：encoding		——->	fileencoding
+对文件的操作	|	编码的转换
+----------------|--------
+读				|	fileencoding –> encoding
+显				|	encoding –> termencoding
+写				|	encoding –> fileencoding
 
 只要这三种转换都不会出现问题，那么VIM就可以正常工作，不会出现乱码。 
 
