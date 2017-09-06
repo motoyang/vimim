@@ -683,3 +683,219 @@ echo log10(1000)
 3.0
 ```
 
+#### 2.5 操作变量的函数
+
+由于VimScript动态数据类型特性和各种不同的作用域，为方便程序员操纵变量，vim平台内置了一组操作变量的函数。
+
+1. type({expr})
+
+返回给定变量名的数据类型。其中的参数可以是变量名，也可以是字面量常数值。返回值是一个Number类型的数字，含义如下：
+0 : Number
+1: String
+2: Funcref
+3: List
+4: Dictionary
+5: Float
+
+给出一个例子:
+```
+let a = 1  
+let b = 'hello'  
+let c = "hello"  
+let d = [1,2,3]  
+let e = {'name':'smstong', 'age': 12}  
+function! MyFunc(x)  
+    echo s:x  
+endfunction  
+  
+let F = function('MyFunc')  
+let g = 1.0  
+echo type(a)  
+echo type(b)  
+echo type(c)  
+echo type(d)  
+echo type(e)  
+echo type(F)  
+echo type(g)  
+  
+echo type(233)  
+echo type('vimscript')  
+echo type([])  
+echo type({})  
+```
+
+输出结果:
+```
+0  
+1  
+1  
+3  
+4  
+2  
+5  
+0  
+1  
+3  
+4  
+```
+
+2. function({name})
+
+返回一个指向名为name的函数的引用类型变量。函数的名字可以是内置函数，也可以是用户自定义函数。别忘了用户自定义函数和函数引用类型变量的名字首字母必须大写。
+
+3. islocked({expr})
+
+功能：查看指定变量是处于锁定状态
+参数 : 变量的名字字符串或者List或Dictionary元素的名字
+返回值: 整数，如果变量是锁定的，则返回一个非零整数，否则返回0
+
+4. getbufvar({expr}, {varname})
+
+功能：读取指定buffer内有效的指定变量的值
+参数：expr 指定缓冲区名字，varname指定变量的名字
+返回值：变量的值
+
+ 变量可以是用户自定义的，也可以是vim的选项option，如&number。如果变量不存在，则返回空，但不报错。
+
+5. setbufvar({expr}, {varname}, {val})
+
+功能 ：为变量赋值
+参数：expr 缓冲区的名子，varname变量名字，val变量的值
+注意：如果变量不存在，则新建这个变量
+
+例子:
+```
+let b:a = "hello"  
+call setbufvar(1, 'c', 2)  
+echo b:c  
+echo getbufvar(1,'a')  
+echo getbufvar(1, 'notexist')  
+echo getbufvar(1, '&number')  
+echo getbufvar(1,'')  
+```
+
+输出:
+```
+2  
+hello  
+0  
+{'current_syntax': 'vim', 'undo_ftplugin': 'setl fo< com< tw< commentstring<| unlet! b:match_ignorecas  
+e b:match_words b:match_skip', 'c': 2, 'a': 'hello', 'did_ftplugin': 1, 'did_indent': 1}  
+```
+
+6. getwinvar({winnr}, {varname})
+
+功能：读取当前tab页中的指定窗口范围的变量
+参数 ：winnr窗口号（从0开始），varname变量名
+
+7. setwinvar({winnr}, {varname}, {value})
+
+功能 ：设置当前tab页的指定窗口范围的变量值
+
+8. gettabvar({tabnr}, {varname})和settabvar({tabnr}, {varname})
+
+读取和设置tab页范围的变量
+
+9. gettabwinvar({tabnr},{winnr},{varname}) 和settabwinvar({tabnr}, {winnr}, {varname}, {value})
+
+读取和设置指定tab页中的指定window范围的变量。
+
+以上这些都是对不同 作用域范围内的变量进行读写。
+
+10. garbagecollect([at_exit])
+
+作用 ：清理释放循环引用导致的内存泄漏
+说明： 这个函数很少需要程序员调用，因为vim会在内存超限的时候自动调用它。
+
+VimScript是一门带垃圾回收功能的语言，任何不再使用的对象都会被回收，但是循环引用的对象需要特殊处理。
+
+#### 2.6 操纵光标的函数
+
+1. 返回指定位置的列号 col({expr})
+
+列号从1开始算起。给出几个例子。
+```
+" 返回光标所在的列号  
+echo col(".")  
+  
+" 返回光标所在的行的长度+1  
+echo col("$")  
+  
+" 返回第2行的长度+1  
+echo col([2,'$'])  
+```
+
+Note: 之所以是长度+1是因为，其实每行的最后有一个不可打印的换行符，当然最后一行没有，但是为了统一，还是都加上了。
+
+2. 返回指定位置的行号 line({expr})
+
+```
+" 返回当前光标所在的行号  
+echo line(".")  
+  
+" 返回当前缓冲区的最后一行的行号  
+echo line("$")  
+  
+" 返回可见区域第一行的行号  
+echo line("w0")  
+  
+" 返回可见区域的最后一行行号  
+echo line("w$")  
+  
+" 返回visual 模式下选择区域的起始行号  
+echo line("v")  
+```
+
+3. 获取指定位置的行和列号
+
+```
+" 返回当前光标所在的行号  
+echo line(".")  
+echo "当前光标的位置是:"  
+let pos = getpos(".")  
+echo pos[1] . ", " . pos[2]  
+```
+
+4. 移动光标到指定的行和列 setpos({expr})
+```
+let pos=[0,5,5,0]  
+call setpos(".", pos)  
+```
+获取和移动就可以实现光标的跳转了，操纵光标是编辑器操作的重要动作。使用着两个函数就可以实现常用的hjkl快捷键功能了。
+
+#### 2.7 读写缓冲区的函数
+
+1. 读取一行或者多行 getline()
+```
+echo "光标所在行的内容是:"  
+echo getline(".")  
+  
+echo "第3行的内容是:"  
+echo getline(3)  
+  
+echo "第6-10行的内容是:"  
+echo getline(6,10)  
+```
+
+2. 设置一行或者多行的内容 setline()
+```
+call setline(1, "我要在第一行出现")  
+  
+call setline(1, ["第一行", "第二行", "第三行"])  
+
+for i in range(1,100)  
+    call setline(i, "第" . i . "行")  
+endfor  
+```
+
+3. 插入一行或者多行 append()
+```
+call append(line('$'), "# THE END") " 在最后增加一行  
+call append(0, ["Chapter 1", "the beginning"]) " 在开头插入两行  
+```
+
+4. 获取指定行的缩进量（开头空白）indent()
+
+根据空白的多少，返回相当于的空格的个数。如tabstop=4,则一个Tab字符相当于4。
+
+5. 使用正则表达式查找指定行 search()
