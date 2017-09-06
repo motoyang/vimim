@@ -140,9 +140,10 @@ VIM把缓冲区中的encoding编码的字节集合转换成fileencoding编码后
 ### 4.1 VIM设置
 
 >set encoding=utf-8
->set termencoding=utf-8
->set fileencodings=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
 >
+>set termencoding=utf-8
+set fileencodings=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
+
 
 如果无特殊要求和限制，磁盘文件也以UTF-8方式存储。
 
