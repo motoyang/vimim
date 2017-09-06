@@ -94,7 +94,7 @@ VIM把缓冲区中的encoding编码的字节集合转换成fileencoding编码后
 
 这很好理解，比如以GBK编码方式存储的文件，VIM把fileencoding探测成了ASCII，则肯定会出现问题。
 
-####【解决方法】
+#### 【解决方法】
 
 一是靠VIM自身提高探测水平；二是设置合适的fileencodings变量，把最可能用到的编码方式放到最前面。如果VIM实在是探测不对，那么就只能通过 `:set fileencoding=xxx` 命令来手动探测了。
 
@@ -102,7 +102,7 @@ VIM把缓冲区中的encoding编码的字节集合转换成fileencoding编码后
 
 例如，文件采用GBK编码，而ecoding使用ASCII，这样大量的汉字字符无法被转换，从而导致乱码。 
 
-####【解决方法】
+##### 【解决方法】
 
 把encoding设置成UTF-8，目前为止UTF-8能包含所有字符，所以其他的任何编码方式都可以无损的转换为UTF-8。
 
@@ -110,7 +110,7 @@ VIM把缓冲区中的encoding编码的字节集合转换成fileencoding编码后
 
 这个问题，与3.2类似。 
 
-####【解决办法】
+###### 【解决办法】
 
 把termencoding设置为何encoding相同。默认termencoding=”“的情况下，这两者就是相同的。
 
@@ -118,7 +118,7 @@ VIM把缓冲区中的encoding编码的字节集合转换成fileencoding编码后
 
 例如本来字符终端的编码属性为GBK，而termencoding却为UTF-8，那么VIM就会错误的认为终端就是UTF-8编码的，导致向终端输出UTF-8编码的字节流，而终端却按照GBK来识别，当然就会识别成乱码。 
 
-####【解决办法】
+### 【解决办法】
 
 把终端实际的编码方式和VIM的termencoding统一起来。
 
