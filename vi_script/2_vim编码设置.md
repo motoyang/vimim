@@ -1,3 +1,5 @@
+# vim字符编码理解和设置说明
+
 
 ## 1 字符编码基础知识
 
@@ -81,11 +83,11 @@ VIM把缓冲区中的encoding编码的字节集合转换成fileencoding编码后
 
 可以看出，VIM涉及到的3种字符编码之间的转换：
 
-对文件的操作	|	编码的转换
-----------------|--------
-读				|	fileencoding –> encoding
-显				|	encoding –> termencoding
-写				|	encoding –> fileencoding
+| 对文件的操作 | 编码的转换                    |
+| ------ | ------------------------ |
+| 读      | fileencoding –> encoding |
+| 显      | encoding –> termencoding |
+| 写      | encoding –> fileencoding |
 
 只要这三种转换都不会出现问题，那么VIM就可以正常工作，不会出现乱码。 
 
@@ -139,11 +141,9 @@ VIM把缓冲区中的encoding编码的字节集合转换成fileencoding编码后
 
 ### 4.1 VIM设置
 
->set encoding=utf-8
->
->set termencoding=utf-8
->
->set fileencodings=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
+>set encoding=utf-8  
+>set termencoding=utf-8  
+>set fileencodings=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936  
 
 
 如果无特殊要求和限制，磁盘文件也以UTF-8方式存储。
